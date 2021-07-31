@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class Tela_Segunda_cadastro extends AppCompatActivity {
     private Button btSalvar;
@@ -20,14 +24,6 @@ public class Tela_Segunda_cadastro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_segunda_cadastro);
 
-       /** String tarefa = atividade.getText().toString();
-        //aqui deve ser data
-       String data = datas.getText().toString();
-
-       Tarefas tarefas = new Tarefas(tarefa,data);
-
-       Intent intent = new Intent();
-       intent.putExtra("Tarefas", tarefas); */
 
         //botoes
         btSalvar = findViewById(R.id.button3);
@@ -41,21 +37,24 @@ public class Tela_Segunda_cadastro extends AppCompatActivity {
     }
 
     private class Ouvinte_botao_Salvar implements View.OnClickListener{
-
         @Override
         public void onClick(View v) {
-
             String tarefa = atividade.getText().toString();
-            //aqui deve ser data
-            String data = datas.getText().toString();
+            Date data = null;
+            try {
+                data = new SimpleDateFormat("dd/MM/yyyy").parse(datas.getText().toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-            Tarefas tarefas = new Tarefas(tarefa,data);
-
+            Tarefas tarefas = new Tarefas();
             Intent intent = new Intent();
             intent.putExtra("Tarefas", tarefas);
 
             setResult(RESULT_OK, intent);
             finish();
+
+
         }
     }
     private class Ouvinte_botao_Sair implements View.OnClickListener{
