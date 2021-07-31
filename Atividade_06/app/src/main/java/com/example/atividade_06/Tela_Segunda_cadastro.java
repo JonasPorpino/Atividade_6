@@ -40,14 +40,9 @@ public class Tela_Segunda_cadastro extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             String tarefa = atividade.getText().toString();
-            Date data = null;
-            try {
-                data = new SimpleDateFormat("dd/MM/yyyy").parse(datas.getText().toString());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            String data = datas.getText().toString();
 
-            Tarefas tarefas = new Tarefas();
+            Tarefas tarefas = new Tarefas(tarefa,data);
             Intent intent = new Intent();
             intent.putExtra("Tarefas", tarefas);
 

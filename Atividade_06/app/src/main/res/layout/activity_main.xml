@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
     <Button
         android:id="@+id/button"
-        android:text="Novo Cadastro"
+        android:text="Nova Tarefa"
         android:layout_width="match_parent"
         app:backgroundTint="#B30404"
         android:layout_height="wrap_content"/>

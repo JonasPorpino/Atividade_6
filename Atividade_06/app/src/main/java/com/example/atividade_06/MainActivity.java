@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Tarefas> todasTarefas = new ArrayList<>();
     private ArrayAdapter<Tarefas> adapter;
     private View view;
-    private Date data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     String tarefa = atividade.getText().toString();
-                    //Date data = null;
-                    try {
-                        data = new SimpleDateFormat("dd/MM/yyyy").parse(datas.getText().toString());
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                    String data = datas.getText().toString();
 
                     Tarefas tarefas = new Tarefas(tarefa,data);
 
