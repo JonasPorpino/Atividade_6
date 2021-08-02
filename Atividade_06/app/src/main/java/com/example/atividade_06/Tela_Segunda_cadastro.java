@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,16 +39,28 @@ public class Tela_Segunda_cadastro extends AppCompatActivity {
     private class Ouvinte_botao_Salvar implements View.OnClickListener{
         @Override
         public void onClick(View v) {
-            String tarefa = atividade.getText().toString();
-            String data = datas.getText().toString();
+            Date data = null;
 
-            Tarefas tarefas = new Tarefas(tarefa,data);
+            String tarefa = atividade.getText().toString();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+            // essa linha foi para testes
+            try {
+                data = formatter.parse("11/12/2021");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            // formatando a data
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String dataFormatada = dateFormat.format(data);
+
+            Tarefas tarefas = new Tarefas(tarefa,dataFormatada);
             Intent intent = new Intent();
             intent.putExtra("Tarefas", tarefas);
 
             setResult(RESULT_OK, intent);
             finish();
-
 
         }
     }

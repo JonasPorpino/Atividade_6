@@ -20,7 +20,7 @@
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:inputType="date"
         android:hint="dia/mês/ano" />
 
     <LinearLayout
@@ -32,7 +32,7 @@
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="150dp"
+            android:layout_width="130dp"
             android:layout_height="47dp"
             android:text="SAIR"
             app:backgroundTint="#B30404"/>

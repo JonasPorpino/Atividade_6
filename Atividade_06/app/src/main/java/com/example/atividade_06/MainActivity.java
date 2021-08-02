@@ -1,11 +1,13 @@
 package com.example.atividade_06;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<Tarefas> adapter;
     private View view;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
         // elementos da tela
         lista = findViewById(R.id.listaView);
-
-        adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, todasTarefas);
+        
+        adapter = new Adaptador(MainActivity.this, android.R.layout.simple_list_item_1, todasTarefas);
+        //adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, todasTarefas);
         lista.setAdapter(adapter);
 
         lista.setOnItemLongClickListener(new OuvinteCliqueLongo());
@@ -66,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
             caixa.setTitle("Nova Tarefa");
             caixa.setView(view);
 
-
             //botoes e EtidTexts
             btSalvar = view.findViewById(R.id.button3);
             btSair = view.findViewById(R.id.button2);
@@ -74,20 +78,30 @@ public class MainActivity extends AppCompatActivity {
             datas = view.findViewById(R.id.editTextTextPersonName2);
             final Dialog dialog = caixa.create();
             btSalvar.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
                     EditText atividade = view.findViewById(R.id.editTextTextPersonName);
                     EditText datas = view.findViewById(R.id.editTextTextPersonName2);
-
+                    Date data = null;
 
                     String tarefa = atividade.getText().toString();
-                    String data = datas.getText().toString();
+                    String dataa = datas.getText().toString();
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-                    Tarefas tarefas = new Tarefas(tarefa,data);
+                    try {
+                        data = formatter.parse(dataa);
+                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        String dataFormatada = dateFormat.format(data);
 
+                        Tarefas tarefas = new Tarefas(tarefa,dataFormatada);
 
-                    adapter.add(tarefas);
-                    Toast.makeText(MainActivity.this, "SALVO" , Toast.LENGTH_SHORT).show();
+                        adapter.add(tarefas);
+                        Toast.makeText(MainActivity.this, "SALVO" , Toast.LENGTH_SHORT).show();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        Toast.makeText(MainActivity.this, "Data INVALIDA" , Toast.LENGTH_SHORT).show();
+                    }
                     dialog.cancel();
                 }
 
@@ -105,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //-------------------chamada para a outra janela ------------------------
-
+    // ---- essa parte também foi para testes
     private  class OuvinteDoBotao implements View.OnClickListener{
 
         @Override
@@ -129,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "CANCELADO", Toast.LENGTH_SHORT).show();
         }
 
+    //---- aqui é feita exclusão do itens nas listas
     }
     private class  OuvinteCliqueLongo implements AdapterView.OnItemLongClickListener {
 

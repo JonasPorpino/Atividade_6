@@ -2,22 +2,25 @@ package com.example.atividade_06;
 
 
 import java.io.Serializable;
+import java.util.Date;
 
 
 public class Tarefas implements Serializable {
 
     private String tarefa;
-    private String data;
+    private Date data;
+    private String dataFormatada;
 
 
     public Tarefas(){
-        
+
     }
 
-    public Tarefas(String tarefa, String data) {
-            this.tarefa = tarefa;
-            this.data = data;
+    public Tarefas(String tarefa, String dataFormatada) {
+        this.tarefa = tarefa;
+        this.dataFormatada = dataFormatada;
     }
+
 
     public String getTarefa() {
         return tarefa;
@@ -27,18 +30,26 @@ public class Tarefas implements Serializable {
         this.tarefa = tarefa;
     }
 
-    public String getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Date data) {
         this.data = data;
     }
 
-    @Override
-    public String toString(){
-        return "TAREFA: "+tarefa+" || data: "+data;
+    public String getDataFormatada() {
+        return dataFormatada;
+    }
+
+    public void setDataFormatada(String dataFormatada) {
+        this.dataFormatada = dataFormatada;
     }
 
 
+
+    @Override
+    public String toString() {
+        return  tarefa + dataFormatada;
+    }
 }
